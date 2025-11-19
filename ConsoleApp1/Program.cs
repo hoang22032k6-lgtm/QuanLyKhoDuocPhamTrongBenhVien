@@ -119,6 +119,8 @@ namespace QuanLyKhoDuocPham
             }
 
             ThemThuoc(maThuoc, tenThuoc, donViTinh, hanSuDung, soLuongTon);
+            Console.WriteLine();
+            Console.WriteLine("Thuốc mới đã được thêm thành công!");
             NhanPhimBatKy();
         }
 
