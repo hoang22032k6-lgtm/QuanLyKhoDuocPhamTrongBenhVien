@@ -68,11 +68,6 @@ namespace QuanLyKhoDuocPham
 
         static void ThemThuoc(string maThuoc, string tenThuoc, string donViTinh, string hanSuDung, int soLuongTon)
         {
-            if (danhSachThuoc.ContainsKey(maThuoc))
-            {
-                Console.WriteLine("Mã thuốc {0} đã tồn tại!", maThuoc);
-                return;
-            }
 
             Thuoc thuocMoi = new Thuoc(maThuoc, tenThuoc, donViTinh, hanSuDung, soLuongTon);
 
@@ -83,8 +78,6 @@ namespace QuanLyKhoDuocPham
                 danhSachTheoHanSuDung[hanSuDung] = new List<string>();
             }
             danhSachTheoHanSuDung[hanSuDung].Add(maThuoc);
-
-            Console.WriteLine("Đã thêm thuốc thành công!");
         }
 
         static void ThemThuocTuNguoiDung()
@@ -112,7 +105,7 @@ namespace QuanLyKhoDuocPham
             Console.Write("Nhập đơn vị tính: ");
             string donViTinh = Console.ReadLine();
 
-            Console.Write("Nhập hạn sử dụng (dd/mm/yyyy): ");
+            Console.Write("Nhập hạn sử dụng (mm/yyyy): ");
             string hanSuDung = Console.ReadLine();
 
             Console.Write("Nhập số lượng tồn: ");
