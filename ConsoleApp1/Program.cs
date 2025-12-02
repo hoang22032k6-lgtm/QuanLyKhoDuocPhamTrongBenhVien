@@ -572,7 +572,7 @@ namespace QuanLyKhoDuocPham
             Console.WriteLine("═══════════════════════════════════════");
             Console.ResetColor();
 
-            const int soLuongThuocCanSinh = 20000;
+            const int soLuongThuocCanSinh = 10000;
             Console.WriteLine("Đang sinh dữ liệu mô phỏng {0:N0} thuốc...", soLuongThuocCanSinh);
 
             Dictionary<string, Thuoc> boNhoThuoc = new Dictionary<string, Thuoc>(soLuongThuocCanSinh);
@@ -602,11 +602,29 @@ namespace QuanLyKhoDuocPham
             }
             swThem.Stop();
 
+            // Lưu dữ liệu mô phỏng vào danh sách chính để sử dụng các chức năng khác
+            Console.WriteLine("\nĐang lưu dữ liệu mô phỏng vào hệ thống...");
+            foreach (var thuoc in boNhoThuoc.Values)
+            {
+                // Kiểm tra xem mã thuốc đã tồn tại chưa để tránh trùng lặp
+                if (!danhSachThuoc.ContainsKey(thuoc.MaThuoc))
+                {
+                    danhSachThuoc[thuoc.MaThuoc] = thuoc;
+
+                    if (!danhSachTheoHanSuDung.ContainsKey(thuoc.HanSuDung))
+                    {
+                        danhSachTheoHanSuDung[thuoc.HanSuDung] = new List<string>();
+                    }
+                    danhSachTheoHanSuDung[thuoc.HanSuDung].Add(thuoc.MaThuoc);
+                }
+            }
+
             GC.Collect();
             long boNhoSauKhiThem = GC.GetTotalMemory(true);
 
-            Console.WriteLine("\nHoàn tất sinh dữ liệu.");
+            Console.WriteLine("\nHoàn tất sinh dữ liệu và lưu vào hệ thống.");
             Console.WriteLine("- Thời gian thêm dữ liệu: {0} ms", swThem.ElapsedMilliseconds);
+            Console.WriteLine("- Tổng số thuốc trong hệ thống: {0:N0}", danhSachThuoc.Count);
             Console.WriteLine("- Bộ nhớ sử dụng ước tính: {0:N0} bytes (~{1:F2} MB)", boNhoSauKhiThem, boNhoSauKhiThem / (1024.0 * 1024.0));
             Console.WriteLine("- Mật độ dữ liệu: {0:N2} bytes/thuốc", boNhoSauKhiThem / (double)soLuongThuocCanSinh);
 
